@@ -15,7 +15,15 @@ import url from "url";
 
 const app = express();
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // Vite dev server
+      "https://bruhmanishe.github.io/fullstuck-chat", // Your Render frontend URL
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
