@@ -97,7 +97,7 @@ export const login = (req, res) => {
       .cookie("access_token", token, { 
         httpOnly: true, 
         secure: true,
-        sameSite: "Lax",
+        sameSite: "None",
         path: "/"
       })
       .json(other);
