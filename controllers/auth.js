@@ -94,7 +94,11 @@ export const login = (req, res) => {
     const token = jwt.sign({ id: data[0].id }, "jwtkey");
     return res
       .status(200)
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, { 
+        httpOnly: true, 
+        secure: true,
+        sameSite: "None"
+      })
       .json(other);
   });
 };
