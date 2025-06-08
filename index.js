@@ -18,7 +18,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: 
-      "https://fullstuck-chat-render-client.onrender.com/",
+      "https://fullstuck-chat-render-client.onrender.com",
     credentials: true,
   })
 );
