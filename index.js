@@ -17,10 +17,8 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173", // Vite dev server
-      "https://bruhmanishe.github.io/fullstuck-chat", // Your Render frontend URL
-    ],
+    origin: 
+      "https://bruhmanishe.github.io/fullstuck-chat",
     credentials: true,
   })
 );
