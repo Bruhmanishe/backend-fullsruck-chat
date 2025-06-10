@@ -12,7 +12,8 @@ export const createChat = (req, res) => {
     // console.log(userInfo.id, users.fromId);
     if (userInfo.id != users.fromId)
       return res.status(401).json("Incorrect token!");
-    const q = "SELECT * FROM chatUsers WHERE `chatUserId`=? OR `chatUserId`=?";
+       const q =
+      "SELECT * FROM chatUsers WHERE `chatUserId` IN(?,?) GROUP BY `chatId` HAVING COUNT(DISTINCT chatUserId) = 2";
     if (users.fromId === users.toId)
       return res.status(409).json("You can't message to youself!");
     db.query(q, [users.fromId, users.toId], (err, data) => {
@@ -20,7 +21,7 @@ export const createChat = (req, res) => {
         return (
           res.status(403).json("Server connection problem!"), console.log(err)
         );
-      if (data.length > 2) return res.status(401).json("chat already exists!");
+      if (data.length > 0) return res.status(401).json("chat already exists!");
       const q = "INSERT INTO chats (`chatname`) VALUES (?)";
       db.query(q, [["chat"]], (err, data) => {
         if (err)
