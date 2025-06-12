@@ -73,7 +73,7 @@ export const deleteChat = (req, res) => {
     const q = "SELECT * FROM chatUsers WHERE chatId = ? AND chatUserId=?";
     db.query(q, [req.body.chatId, req.body.userId], (err, data) => {
       if (err) return res.status(401).json("No such chat exists!");
-      const q = "DELETE FROM chats WHERE chatId = ?";
+      const q = "DELETE FROM chats WHERE id = ?";
       db.query(q, [req.body.chatId], (err, data) => {
         if (err) return res.status(401).json("Somethin gone wrong!");
         return res.status(200).json("Chat deletetd succesfully!"), console.log("chat deleted successfully");
