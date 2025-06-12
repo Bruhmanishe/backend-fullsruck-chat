@@ -64,6 +64,24 @@ export const createChat = (req, res) => {
   });
 };
 
+export const deleteChat = (req, res) => {
+  if (!req.cookies.access_token) return res.status(401).json("Please login!");
+  jwt.verify("jwtkey", req.cookies.access_token, (err, userData) => {
+    if (err) return res.status(401).json("Invalid token!");
+    if (req.body.userId !== userData.id)
+      return res.status(401).json("Invalid token!");
+    const q = "SELECT * FROM chatUsers WHERE chatId = ? AND chatUserId=?";
+    db.query(q, [req.body.chatId, req.body.userId], (err, data) => {
+      if (err) return res.status(401).json("No such chat exists!");
+      const q = "DELETE FROM chats WHERE chatId = ?";
+      db.query(q, [req.body.chatId], (err, data) => {
+        if (err) return res.status(401).json("Somethin gone wrong!");
+        return res.status(200).json("Chat deletetd succesfully!");
+      });
+    });
+  });
+};
+
 export const getChats = (req, res) => {
   const reqUserId = url.parse(req.url, true).query.userId;
 
