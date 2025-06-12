@@ -66,7 +66,7 @@ export const createChat = (req, res) => {
 
 export const deleteChat = (req, res) => {
   if (!req.cookies.access_token) return res.status(401).json("Please login!");
-  jwt.verify("jwtkey", req.cookies.access_token, (err, userData) => {
+  jwt.verify(req.cookies.access_token, "jwtkey", (err, userData) => {
     if (err) return res.status(401).json("Invalid token!");
     if (req.body.userId !== userData.id)
       return res.status(401).json("Invalid token!");
